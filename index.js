@@ -1,5 +1,6 @@
 var Twit = require('twit')
 require('dotenv').config();
+const axios = require('axios')
 
 console.log(process.env.TWITTER_CONSUMER_KEY)
  
@@ -25,3 +26,49 @@ function onAuthenticated(err, res) {
 
   console.log("Authentication successful. Running bot...\r\n")
 } 
+
+async function getRetrograde() {
+  const today = new Date().toISOString().slice(0,10)
+  try { 
+    const result = await axios({
+      method: 'get',
+      url: `http://localhost:3000/is-mercury-retrograde?date=${today}`,
+      responseType: 'stream'
+    }).then(function (response) {
+      console.log(response.data)
+    });
+    
+    // return result
+  }
+  catch (err) {
+    console.log(err);
+  }
+}
+
+async function postTweet() {
+  const isRetrograde = await getRetrograde()
+  console.log(isRetrograde)
+}
+
+postTweet()
+
+// T.post("statuses/update", {
+//   try {
+
+//   }
+//   catch (err) {
+//     console.log(err)
+//   }
+
+
+
+//   status: response
+// }, onTweeted) 
+
+// function onTweeted(err, reply) {
+//   if (err !== undefined) {
+//       console.log(err)
+//   } else {
+//       console.log("Tweeted: " + reply.text)
+//   }
+// } 
