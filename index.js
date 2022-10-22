@@ -58,6 +58,7 @@ try {
 async function postTweet() {
   const isRetrograde = await getRetrograde()
   console.log(isRetrograde)
+  T.post('statuses/update', { status: isRetrograde.isRetrograde ? 'Mercury is in retrograde' : 'Mercury is not in retrograde' })
 }
 
 postTweet()
