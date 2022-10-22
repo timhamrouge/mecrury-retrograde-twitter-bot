@@ -1,8 +1,6 @@
 var Twit = require('twit')
 require('dotenv').config();
 const axios = require('axios')
-
-console.log(process.env.TWITTER_CONSUMER_KEY)
  
 var T = new Twit({
   consumer_key: process.env.TWITTER_CONSUMER_KEY,
@@ -27,22 +25,34 @@ function onAuthenticated(err, res) {
   console.log("Authentication successful. Running bot...\r\n")
 } 
 
-async function getRetrograde() {
-  const today = new Date().toISOString().slice(0,10)
-  try { 
-    const result = await axios({
-      method: 'get',
-      url: `http://localhost:3000/is-mercury-retrograde?date=${today}`,
-      responseType: 'stream'
-    }).then(function (response) {
-      console.log(response.data)
-    });
+// async function getRetrograde() {
+//   const today = new Date().toISOString().slice(0,10)
+//   try { 
+//     const result = await axios({
+//       method: 'get',
+//       url: `http://localhost:3000/is-mercury-retrograde?date=${today}`,
+//       responseType: 'stream'
+//     }).then(function (response) {
+//       console.log(response)
+//     });
     
-    // return result
-  }
-  catch (err) {
-    console.log(err);
-  }
+//     // return result
+//   }
+//   catch (err) {
+//     console.log(err);
+//   }
+// }
+
+const getRetrograde = async () => {
+  const today = new Date().toISOString().slice(0,10)
+try {
+  const response = await axios.get(
+    `http://localhost:3000/is-mercury-retrograde?date=${today}`
+  )
+  return response.data
+} catch (err) {
+  console.log('error')
+}
 }
 
 async function postTweet() {
