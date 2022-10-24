@@ -57,6 +57,7 @@ try {
 
 async function postTweet() {
   const isRetrograde = await getRetrograde()
+  // TODO maybe move tyhis to a translation file
   T.post('statuses/update', { status: isRetrograde.isRetrograde ? 'Mercury is in retrograde' : 'Mercury is not in retrograde' })
 }
 
