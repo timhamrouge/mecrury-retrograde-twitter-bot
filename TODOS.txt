@@ -1,0 +1,1 @@
+- deploy the server and DB and then deploy this to a provider that will run a 'tweet' command every day at the same time
